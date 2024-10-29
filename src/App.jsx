@@ -5,7 +5,7 @@ import './App.css'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import axios from 'axios';
 import { BarChart, Bar, ResponsiveContainer } from 'recharts';
-
+import { Audio, Grid } from 'react-loader-spinner';
 function App() {
   const [count, setCount] = useState(0);
   const data = [
@@ -16,6 +16,7 @@ function App() {
     {name: 'Page E', uv: 404, pv: 2300, amt: 2400},
 ];
  const [phones, setPhones] = useState([]);
+ const [loading, setLoading] = useState(true);
 
  useEffect( ()=>{
   axios.get('https://openapi.programming-hero.com/api/phones?search=iphone')
@@ -31,6 +32,7 @@ function App() {
      })
      console.log(phonesWithFakeData);
      setPhones(phonesWithFakeData);
+     setLoading(false);
 
   }
      );
@@ -56,6 +58,29 @@ function App() {
     <XAxis dataKey="name" />
     <YAxis />
     </LineChart>
+    { loading &&
+      <div>
+        <Audio
+      height="80"
+      width="80"
+      radius="9"
+      color="green"
+      ariaLabel="three-dots-loading"
+      wrapperStyle
+      wrapperClass
+    />
+      <Grid
+  visible={true}
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="grid-loading"
+  radius="12.5"
+  wrapperStyle={{}}
+  wrapperClass="grid-wrapper"
+  />
+      </div>
+    }
 
     <BarChart width={1200} height={400} data={phones}>
           <Bar dataKey="price" fill="#8884d8" />
